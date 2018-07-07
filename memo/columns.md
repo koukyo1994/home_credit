@@ -226,4 +226,82 @@ has null
 
 real
 has null
-the record which has values are almost the same 
+the record which has values are almost the same
+
+* FONDKAPREMONT_MODE
+
+category
+has null
+5types with nan
+
+* HOUSETYPE_MODE
+
+category
+has null
+5types with nan
+
+* TOTALAREA_MODE
+
+real
+0.0-1.0 value
+has null
+
+* WALLSMATERIAL_MODE
+
+category
+has null
+8types with null
+
+* EMERGENCYSTATE_MODE
+
+yes/no/nan
+has null
+
+* OBS_30_CNT_SOCIAL_CIRCLE
+
+integer
+max348 min0
+
+* DEF_30_CNT_SOCIAL_CIRCLE
+
+integer
+max34, min0
+
+* OBS_60_CNT_SOCIAL_CIRCLE
+
+integer
+max344, min0
+
+* DEF_60_CNT_SOCIAL_CIRCLE
+
+integer
+max24, min0
+
+* DAYS_LAST_PHONE_CHANGE
+
+integer <= 0
+max 0.0 min -4292
+
+* FLAG_DOCUMENT_*
+
+0/1
+
+* AMT_REQ_CREDIT_BUREAU_HOUR
+
+0-4 nan
+
+* AMT_REQ_CREDIT_BUREAU_DAY
+
+0-6 8, 9, nan
+
+* AMT_REQ_CREDIT_BUREAU_WEEK
+
+0-7, nan
+
+* AMT_REQ_CREDIT_BUREAU_MON
+
+almost the same
+
+* AMT_REQ_CREDIT_BUREAU_YEAR
+
+almost the same
