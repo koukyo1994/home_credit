@@ -77,6 +77,7 @@ def has_many_children_w_gender(df, n_child_thres):
     })
     return new_df
 
+
 def has_children_car_house(df):
     f = lambda x, car, house: 1 if (x["FLAG_OWN_CAR"] == car and
                                     x["FLAG_OWN_REALTY"] == house and
@@ -92,6 +93,48 @@ def has_children_car_house(df):
         "has_all": has_all
     })
     return new_df
+
+
+def normalization_by(df, col, name):
+    f = lambda x, arg1, support: \
+        x[arg1] / support.loc[x[col, arg1]]
+    inc_mean_by_region = df[["AMT_INCOME_TOTAL", col]] \
+                         .groupby(col).mean()
+    ann_mean_by_region = df[["AMT_ANNUITY", col]] \
+                         .groupby(col).mean()
+    cre_mean_by_region = df[["AMT_CREDIT", col]] \
+                         .groupby(col).mean()
+    goods_mean_by_region = df[["AMT_GOODS_PRICE", col]] \
+                         .groupby(col).mean()
+    inc_normalized = df.apply(
+        lambda x: f(x, "AMT_INCOME_TOTAL", inc_mean_by_region),
+        axis=1
+    )
+    ann_normalized = df.apply(
+        lambda x: f(x, "AMT_ANNUITY", ann_mean_by_region),
+        axis=1
+    )
+    cre_normalized = df.apply(
+        lambda x: f(x, "AMT_CREDIT", cre_mean_by_region),
+        axis=1
+    )
+    goods_normalized = df.apply(
+        lambda x: f(x, "AMT_GOODS_PRICE", goods_normalized),
+        axis=1
+    )
+    new_df = pd.DataFrame({
+        f"income_normalized_by_{name}": inc_normalized,
+        f"annuity_normalized_by_{name}": ann_normalized,
+        f"credit_normalized_by_{name}": cre_normalized,
+        f"goods_normalized_by_{name}": goods_normalized
+    })
+    return new_df
+
+
+def apply_w_other_children(x):
+    ret = 1 if (x["CNT_CHILDREN"] == 0 and
+                x["NAME_TYPE_SUITE"] == "Children") else 0
+    return ret
 
 
 def application_train_test(num_rows = None, nan_as_category = False):
@@ -115,9 +158,15 @@ def application_train_test(num_rows = None, nan_as_category = False):
 
     df['NEW_CREDIT_TO_ANNUITY_RATIO'] = df['AMT_CREDIT'] / df['AMT_ANNUITY']
     df['NEW_CREDIT_TO_GOODS_RATIO'] = df['AMT_CREDIT'] / df['AMT_GOODS_PRICE']
+    df["NEW_CREDIT_TO_INC_RATIO"] = df["AMT_CREDIT"] / df["AMT_INCOME_TOTAL"]
+    df["NEW_CREDIT_TO_ANNUITY_RATIO"] = df["AMT_CREDIT"] / df["AMT_ANNUITY"]
+    df["NEW_APPLY_W_OTHER_CHILDREN"] = df.apply(
+        lambda x: apply_w_other_children(x),
+        axis=1
+    )
     df['NEW_DOC_IND_KURT'] = df[docs].kurtosis(axis=1)
     df['NEW_LIVE_IND_SUM'] = df[live].sum(axis=1)
-    df['NEW_INC_PER_CHLD'] = df['AMT_INCOME_TOTAL'] / (1 + df['CNT_CHILDREN'])
+    df['NEW_INC_CHI'] = df['AMT_INCOME_TOTAL'] / (1 + df["CNT_CHILDREN"])
     df['NEW_INC_BY_ORG'] = df['ORGANIZATION_TYPE'].map(inc_by_org)
     df['NEW_EMPLOY_TO_BIRTH_RATIO'] = df['DAYS_EMPLOYED'] / df['DAYS_BIRTH']
     df['NEW_ANNUITY_TO_INCOME_RATIO'] = df['AMT_ANNUITY'] / (1 + df['AMT_INCOME_TOTAL'])
@@ -130,18 +179,54 @@ def application_train_test(num_rows = None, nan_as_category = False):
     df['NEW_PHONE_TO_BIRTH_RATIO'] = df['DAYS_LAST_PHONE_CHANGE'] / df['DAYS_BIRTH']
     df['NEW_PHONE_TO_BIRTH_RATIO_EMPLOYER'] = df['DAYS_LAST_PHONE_CHANGE'] / df['DAYS_EMPLOYED']
     df['NEW_CREDIT_TO_INCOME_RATIO'] = df['AMT_CREDIT'] / df['AMT_INCOME_TOTAL']
+    df["NEW_ANNUAL_PAYMENT"] = df["AMT_CREDIT"] / (365*100 + df["DAYS_BIRTH"])
+    df["NEW_ANNUAL_PERCENT"] = df["AMT_INCOME_TOTAL"] / df["NEW_ANNUAL_PAYMENT"]
+    df["NDOC"] = 0
+    for i in range(2, 22):
+        df["NDOC"] += df[f"FLAG_DOCUMENT_{i}"]
 
+    # add custom features
     car_owner_gen = car_owner_w_gender(df)
     realty_own_gen = realty_own_w_gender(df)
     child_w_gen = has_children_w_gender(df)
     many_children_gen = has_many_children_w_gender(df, 4)
+    car_house_children = has_children_car_house(df)
+    normalized_by_region = normalization_by(df,
+                                            "REGION_POPULATION_RELATIVE",
+                                            "region")
+    normalized_by_inc_type = normalization_by(df,
+                                              "NAME_INCOME_TYPE",
+                                              "inctype")
+    normalized_by_edu = normalization_by(df,
+                                         "NAME_EDUCATION_TYPE",
+                                         "edutype")
+    normalized_by_housing = normalization_by(df,
+                                             "NAME_HOUSING_TYPE",
+                                             "housing")
+    normalized_by_city = normalization_by(df,
+                                          "REGION_RATING_CLIENT_W_CITY",
+                                          "cityrating")
+    normalized_by_rating = normalization_by(df,
+                                            "REGION_RATING_CLIENT",
+                                            "rating")
+    normalized_by_org = normalization_by(df,
+                                         "ORGANIZATION_TYPE",
+                                         "org")
 
+    df = pd.concat([df, car_owner_gen, realty_own_gen, child_w_gen,
+                    many_children_gen, car_house_children,
+                    normalized_by_region, normalized_by_inc_type,
+                    normalized_by_edu, normalized_by_housing,
+                    normalized_by_city, normalized_by_rating,
+                    normalized_by_org], axis=1)
 
     # Categorical features with Binary encode (0 or 1; two categories)
     for bin_feature in ['CODE_GENDER', 'FLAG_OWN_CAR', 'FLAG_OWN_REALTY']:
         df[bin_feature], uniques = pd.factorize(df[bin_feature])
+
     # Categorical features with One-Hot encode
     df, cat_cols = one_hot_encoder(df, nan_as_category)
+
     dropcolum=['FLAG_DOCUMENT_2','FLAG_DOCUMENT_4',
     'FLAG_DOCUMENT_5','FLAG_DOCUMENT_6','FLAG_DOCUMENT_7',
     'FLAG_DOCUMENT_8','FLAG_DOCUMENT_9','FLAG_DOCUMENT_10',
