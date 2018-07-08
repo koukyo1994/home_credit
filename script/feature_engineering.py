@@ -77,6 +77,22 @@ def has_many_children_w_gender(df, n_child_thres):
     })
     return new_df
 
+def has_children_car_house(df):
+    f = lambda x, car, house: 1 if (x["FLAG_OWN_CAR"] == car and
+                                    x["FLAG_OWN_REALTY"] == house and
+                                    x["CNT_CHILDREN"] > 0) else 0
+    has_car_child = df.apply(lambda x: f(x, 'Y', 'Y'), axis=1) + \
+                    df.apply(lambda x: f(x, 'Y', 'N'), axis=1)
+    has_house_child = df.apply(lambda x: f(x, 'Y', 'Y'), axis=1) + \
+                      df.apply(lambda x: f(x, 'N', 'Y'), axis=1)
+    has_all = df.apply(lambda x: f(x, 'Y', 'Y'), axis=1)
+    new_df = pd.DataFrame({
+        "has_car_child": has_car_child,
+        "has_house_child": has_house_child,
+        "has_all": has_all
+    })
+    return new_df
+
 
 def application_train_test(num_rows = None, nan_as_category = False):
     # Read data and merge
@@ -119,7 +135,7 @@ def application_train_test(num_rows = None, nan_as_category = False):
     realty_own_gen = realty_own_w_gender(df)
     child_w_gen = has_children_w_gender(df)
     many_children_gen = has_many_children_w_gender(df, 4)
-    
+
 
     # Categorical features with Binary encode (0 or 1; two categories)
     for bin_feature in ['CODE_GENDER', 'FLAG_OWN_CAR', 'FLAG_OWN_REALTY']:
