@@ -76,3 +76,20 @@ def has_many_children_w_gender(df, n_child_thres):
         "has_many_children_f": has_many_children_f
     })
     return new_df
+
+
+def has_children_car_house(df):
+    f = lambda x, car, house: 1 if (x["FLAG_OWN_CAR"] == car and
+                                    x["FLAG_OWN_REALTY"] == house and
+                                    x["CNT_CHILDREN"] > 0) else 0
+    has_car_child = df.apply(lambda x: f(x, 'Y', 'Y'), axis=1) + \
+                    df.apply(lambda x: f(x, 'Y', 'N'), axis=1)
+    has_house_child = df.apply(lambda x: f(x, 'Y', 'Y'), axis=1) + \
+                      df.apply(lambda x: f(x, 'N', 'Y'), axis=1)
+    has_all = df.apply(lambda x: f(x, 'Y', 'Y'), axis=1)
+    new_df = pd.DataFrame({
+        "has_car_child": has_car_child,
+        "has_house_child": has_house_child,
+        "has_all": has_all
+    })
+    return new_df
