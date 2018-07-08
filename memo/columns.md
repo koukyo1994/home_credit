@@ -30,7 +30,7 @@ Y/N
 
 How many children does the client have
 Many children but young -> dangerous?
-(1-12, 14, 19)
+(0-12, 14, 19)
 
 * AMT_INCOME_TOTAL
 
