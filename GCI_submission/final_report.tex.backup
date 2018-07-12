@@ -1,0 +1,20 @@
+\documentclass[a4paper,10pt]{jsarticle}
+\usepackage[utf8]{inputenc}
+
+%opening
+\title{GCI最終課題}
+\author{工学系研究科航空宇宙工学専攻修士一年\\荒居 秀尚}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+本稿は、現在Kaggleにおいて行われているHome Credit GroupのDefault Riskを評価するコンペティションHome-Credit-Default-Riskに絡めて
+Home Creditグループにとってより価値の高いクレジットスコアリングモデルを提案するものである。本稿は、背景・導入、仮説・評価、価値提案の
+3つのセクションから構成される。
+\end{abstract}
+
+\section{}
+
+\end{document}
