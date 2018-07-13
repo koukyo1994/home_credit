@@ -1,11 +1,11 @@
-This is e-pTeX, Version 3.14159265-p3.6-141210-2.6 (utf8.euc) (TeX Live 2015/Debian) (preloaded format=platex 2018.7.12)  13 JUL 2018 00:08
+This is e-pTeX, Version 3.14159265-p3.6-141210-2.6 (utf8.euc) (TeX Live 2015/Debian) (preloaded format=platex 2018.4.16)  13 JUL 2018 15:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **final_report.tex
 (./final_report.tex
 pLaTeX2e <2006/11/10> (based on LaTeX2e <2016/02/01> patch level 0)
-Babel <3.9n> and hyphenation patterns for 11 languages loaded.
+Babel <3.9n> and hyphenation patterns for 80 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/platex/jsclasses/jsarticle.cls
 Document Class: jsarticle 2014/02/07 okumura
 LaTeX Info: Redefining \rmfamily on input line 352.
@@ -409,12 +409,12 @@ LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
 
 ] (./final_report.aux) ) 
 Here is how much of TeX's memory you used:
- 717 strings out of 494865
- 6649 string characters out of 6179769
- 59429 words of memory out of 5000000
- 4194 multiletter control sequences out of 15000+600000
+ 717 strings out of 493723
+ 6649 string characters out of 6152570
+ 63115 words of memory out of 5000000
+ 4311 multiletter control sequences out of 15000+600000
  14096 words of font info for 62 fonts, out of 8000000 for 9000
- 269 hyphenation exceptions out of 8191
+ 934 hyphenation exceptions out of 8191
  23i,6n,20p,152b,237s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on final_report.dvi (1 page, 1356 bytes).
+Output written on final_report.dvi (1 page, 1420 bytes).
