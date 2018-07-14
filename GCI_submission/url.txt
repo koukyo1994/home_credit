@@ -1,0 +1,6 @@
+* クレジットスコアリングモデル構築/運用支援
+
+http://www.fujitsu.com/downloads/JP/archive/imgjp/group/fri/service/credit_scoring.pdf
+* ITと金融: クレジット・スコアリング
+
+https://www.yu-cho-f.jp/research/old/pri/reserch/monthly/2000/147-h12.12/perspectives.PDF
