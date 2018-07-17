@@ -1,0 +1,53 @@
+\begin{thebibliography}{1}
+
+\bibitem{risk-management}
+尾藤剛.
+\newblock ゼロからはじめる信用リスク管理
+  銀行融資のリスク評価と内部格付制度の基礎知識.
+\newblock 一般社団法人 金融財政事情研究会, 2011.
+
+\bibitem{perspective}
+日向野幹也.
+\newblock perspectives.pdf.
+\newblock
+  https://www.yu-cho-f.jp/research/old/pri/reserch/monthly/2000/147-h12.12/perspectives.PDF.
+
+\bibitem{annuity}
+Catherine~J. Byerly.
+\newblock The truth about your annuity and your credit.
+\newblock https://www.annuity.org/2015/10/15/truth-on-annuity-and-credit/.
+
+\bibitem{fujitsu}
+株式会社 富士通総研~第二コンサルティング本部ビジネスアナリティクス事業部.
+\newblock クレジットスコアリングモデル構築/運用支援.
+\newblock
+  http://www.fujitsu.com/downloads/JP/archive/imgjp/group/fri/service/credit\_scoring.pdf.
+
+\bibitem{kirill}
+KirillOdintsov.
+\newblock Welcome note for home credit.
+\newblock https://www.kaggle.com/c/home-credit-default-risk/discussion/57054.
+
+\bibitem{scorecard}
+クレジットカード審査のスコアリング.
+\newblock
+  https://www.woshiru.com/creditcard/kisochishiki/shinsa/shinyouzyouhoukikan/shinsa\_scoring.html.
+
+\bibitem{mlit}
+国土交通省.
+\newblock 平成23年度民間住宅ローンの実態に関する調査の結果について.
+\newblock http://www.mlit.go.jp/report/press/house01\_hh\_000047.html.
+
+\bibitem{stepwisebayse}
+各務~和彦奥村~拓史.
+\newblock 階層ベイズ・モデルによるクレジット・スコアリング・モデル: 住宅ローン
+  コンソーシアム・データへの応用.
+\newblock https://www.terrapub.co.jp/journals/jjssj/pdf/4201/42010025.pdf.
+
+\bibitem{LGBM}
+Pooh.
+\newblock Fork\_of\_fork\_lightgbm\_with\_simple\_features.
+\newblock
+  https://www.kaggle.com/poohtls/fork-of-fork-lightgbm-with-simple-features.
+
+\end{thebibliography}
