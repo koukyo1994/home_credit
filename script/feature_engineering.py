@@ -15,6 +15,25 @@ from lightgbm import LGBMClassifier
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
+class TargetEncoder:
+    def __init__(self):
+        self.encoder = None
+
+    def fit(self, cat, target):
+        df = pd.concat([cat, target], axis=1)
+        colname_category = cat.name
+        colname_target = target.name
+
+        self.encoder = df.groupby(colname_category)[colname_target].mean()
+
+    def transform(self, cat):
+        return cat.map(lambda x: self.encoder[x])
+
+    def fit_transform(self, cat, target):
+        self.fit(cat, target)
+        return self.transform(cat)
+
+
 @contextmanager
 def timer(title):
     t0 = time.time()
