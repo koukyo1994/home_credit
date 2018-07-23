@@ -1,6 +1,7 @@
 import gc
 import os
 import time
+import ipdb
 import warnings
 import numpy as np
 import pandas as pd
@@ -43,6 +44,7 @@ def bureau_and_balance(num_rows = None, nan_as_category = True):
     bb_aggregations['MONTHS_BALANCE'] = ['min', 'max', 'size', "mean"]
     bb_agg = bb.groupby('SK_ID_BUREAU').agg(bb_aggregations)
     bb_agg.columns = pd.Index([e[0] + "_" + e[1].upper() for e in bb_agg.columns.tolist()])
+    bb_agg.reset_index()
     bureau = bureau.join(bb_agg, how='left', on='SK_ID_BUREAU')
     # bureau.drop(['SK_ID_BUREAU'], axis=1, inplace= True)
     del bb, bb_agg
@@ -69,7 +71,7 @@ def bureau_and_balance(num_rows = None, nan_as_category = True):
     cat_aggregations = {}
     for cat in bureau_cat: cat_aggregations[cat] = ['mean']
     for cat in bb_cat: cat_aggregations[cat + "_MEAN"] = ['mean']
-
+    ipdb.set_trace()
     bureau_agg = bureau.groupby('SK_ID_CURR').agg({**num_aggregations, **cat_aggregations})
     bureau_agg.columns = pd.Index(['BURO_' + e[0] + "_" + e[1].upper() for e in bureau_agg.columns.tolist()])
     # Bureau: Active credits - using only numerical aggregations
